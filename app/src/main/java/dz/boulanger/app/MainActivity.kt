@@ -84,7 +84,7 @@ fun PlanScreen(db: BakeryDb) {
     var name by remember { mutableStateOf("Khobz") }
     var units by remember { mutableStateOf("100") }
     var unitW by remember { mutableStateOf("250") }
-    val day = java.time.LocalDate.now().toEpochDay()
+    val day = System.currentTimeMillis() / 86_400_000L
     val plans by db.dao().plansForDay(day).collectAsState(initial = emptyList())
     Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         OutlinedTextField(name, { name = it }, label = { Text("Product") }, modifier = Modifier.fillMaxWidth())
