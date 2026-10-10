@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مخبزة دز</string>
+    <string name="tab_scale">العيار</string>
+    <string name="tab_plan">الإنتاج</string>
+    <string name="tab_stock">المخزون</string>
+</resources>

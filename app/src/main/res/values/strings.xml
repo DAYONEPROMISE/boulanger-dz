@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BoulangerDZ</string>
+    <string name="tab_scale">Scale</string>
+    <string name="tab_plan">Plan</string>
+    <string name="tab_stock">Stock</string>
+</resources>
