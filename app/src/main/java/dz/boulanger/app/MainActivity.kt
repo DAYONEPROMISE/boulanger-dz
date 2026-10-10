@@ -10,8 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
             BoulangerTheme {
                 var tab by remember { mutableIntStateOf(0) }
                 val tabs = listOf(
-                    Tab(R.string.tab_scale, Icons.Filled.Calculate, "Scale"),
+                    Tab(R.string.tab_scale, Icons.Filled.List, "Scale"),
                     Tab(R.string.tab_plan, Icons.Filled.DateRange, "Plan"),
                     Tab(R.string.tab_stock, Icons.Filled.ShoppingCart, "Stock")
                 )
