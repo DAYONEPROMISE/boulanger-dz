@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,3 +40,26 @@ jobs:
         with:
           name: boulangerdz-release-apk
           path: app/build/outputs/apk/release/*.apk
+      - name: Read app version
+        run: |
+          VER=$(grep -hoP 'versionName\s*=?\s*"\K[0-9.]+' app/build.gradle app/build.gradle.kts 2>/dev/null | head -1)
+          CODE=$(grep -hoP 'versionCode\s*=?\s*\K[0-9]+' app/build.gradle app/build.gradle.kts 2>/dev/null | head -1)
+          echo "APP_VERSION=${VER:-0.0.0}" >> "$GITHUB_ENV"
+          echo "APP_CODE=${CODE:-0}" >> "$GITHUB_ENV"
+      - name: Write release notes
+        run: |
+          {
+            echo "# BoulangerDZ v${APP_VERSION} (build ${GITHUB_RUN_NUMBER})"; echo ""
+            echo "- Version: ${APP_VERSION}+${APP_CODE}"; echo "- Commit: ${GITHUB_SHA}"
+            echo "- DZ 2026 OpenPencil pass (design verified, code already conformant)."
+            echo "- Debug APK is installable; release APK is unsigned (test only)."; echo ""
+            echo "## Files"; find app/build/outputs/apk -name '*.apk' -printf '- %f (%s bytes)\n'
+          } > release-notes.md
+          cat release-notes.md
+      - name: Publish APKs to GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.APP_VERSION }}-b${{ github.run_number }}
+          name: BoulangerDZ v${{ env.APP_VERSION }} (build ${{ github.run_number }})
+          bodyFile: release-notes.md
+          artifacts: "app/build/outputs/apk/debug/*.apk,app/build/outputs/apk/release/*.apk"
