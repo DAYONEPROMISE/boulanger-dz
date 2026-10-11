@@ -27,7 +27,13 @@ jobs:
         run: gradle :app:lintDebug --stacktrace
       - name: Assemble debug APK
         run: gradle :app:assembleDebug --stacktrace
+      - name: Assemble release APK (unsigned)
+        run: gradle :app:assembleRelease --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: boulangerdz-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boulangerdz-release-apk
+          path: app/build/outputs/apk/release/*.apk
